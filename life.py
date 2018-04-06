@@ -1,4 +1,3 @@
-from collections import Counter
 from collections import defaultdict
 
 class CLife:
@@ -7,48 +6,45 @@ class CLife:
     ROCK = 'r'
     SHRIMP = 's'
     good_values = {NOTHING, FISH, ROCK, SHRIMP}
-    DX = [1, 1, 1, 0, -1, -1, -1, 0]
-    DY = [1, 0, -1, -1, -1, 0, 1, 1]
-    def __init__(this, n, m):
-        this.n = n
-        this.m = m
-        this.map = [[None]*m for i in range(n)]
+    def __init__(self, n, m):
+        self.n = n
+        self.m = m
+        self.map = [[None]*m for i in range(n)]
 
-    def Set(this, value, x, y):
+    def Set(self, value, x, y):
         if value in CLife.good_values:
-            this.map[x][y] = value
+            self.map[x][y] = value
         else:
             assert(False)
 
-    def Get(this, x, y):
-        return this.map[x][y]
+    def Get(self, x, y):
+        return self.map[x][y]
 
-    def Next(this):
-        new_map = [[None]*this.m for i in range(this.n)]
+    def Next(self):
+        new_map = [[None]*self.m for i in range(self.n)]
 
-        for i in range(this.n):
-            for j in range(this.m):
-                new_map[i][j] = this.GetUpdated(i, j)
-        this.map = new_map
+        for i in range(self.n):
+            for j in range(self.m):
+                new_map[i][j] = self.GetUpdated(i, j)
+        self.map = new_map
 
-    def Play(this, turns):
+    def Play(self, turns):
         for i in range(turns):
-            this.Next()
+            self.Next()
 
-    def GetNeighbors(this, x, y):
+    def GetNeighbors(self, x, y):
         res = defaultdict(int)
 
-        for i in range(8):
-            xn = x + CLife.DX[i]
-            yn = y + CLife.DY[i]
-            if xn >= 0 and xn < this.n and yn < this.m and yn >= 0:
-                res[this.map[xn][yn]] += 1
+        for xn in range(x-1, x+2):
+            for yn in range(y-1, y+2):
+                if 0 <= xn < self.n and 0 <= yn < self.m and (xn, yn) != (x, y):
+                    res[self.map[xn][yn]] += 1
 
         return res
 
-    def GetUpdated(this, x, y):
-        neighbors = this.GetNeighbors(x, y)
-        now = this.map[x][y]
+    def GetUpdated(self, x, y):
+        neighbors = self.GetNeighbors(x, y)
+        now = self.map[x][y]
         if now == CLife.ROCK:
             return CLife.ROCK
         elif now == CLife.FISH:

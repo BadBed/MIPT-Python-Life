@@ -1,7 +1,8 @@
 import argparse
+import sys
 
 from life import CLife
-from test import TestAll
+from test import CTest
 
 def GetParserArgs():
     parser = argparse.ArgumentParser()
@@ -17,40 +18,30 @@ def Run():
     args = GetParserArgs()
 
     if args.runtests:
-        TestAll()
+        CTest.Run()
     else:
         if args.inputfile != None:
-            fin = open(args.inputfile, "r")
-            Read = fin.readline
-        else:
-            Read = input
+            sys.stdin = open(args.inputfile, "r")
 
-        n, m, k = Read().split()
-        n = int(n)
-        m = int(m)
-        k = int(k)
-        life = CLife(n, m)
-        for i in range(n):
-            l = list(Read())
-            for j in range(m):
+        height, width, iterations = input().split()
+        height = int(height)
+        width = int(width)
+        iterations = int(iterations)
+        life = CLife(height, width)
+        for i in range(height):
+            l = list(input())
+            for j in range(width):
                 life.Set(l[j], i, j)
             
-        life.Play(k)
+        life.Play(iterations)
 
         if args.outputfile != None:
-            fout = open(args.outputfile, "r")
-            Write = fout.write
-        else:
-            Write = WriteInStd
+            sys.stdout = open(args.outputfile, "w")
 
-        for i in range(n):
-            for j in range(m):
-                Write(life.Get(i, j))
-            Write("\n")
+        for i in range(height):
+            for j in range(width):
+                print(life.Get(i, j), end='')
+            print()
 
-        if args.inputfile != None:
-            fin.close()
-        if args.outputfile != None:
-            fout.close()
 
 Run()
