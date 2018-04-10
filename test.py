@@ -1,26 +1,36 @@
 from life import CLife
 
+
 class CTest:
     tests = []
+
     def Run():
         for i in range(len(CTest.tests)):
             print("run test", i)
             CTest.tests[i]()
-        print("success")
+            print("test", i, "done")
+        print("all tests done")
+
 
 def test(f):
     CTest.tests.append(f)
     return f
 
+
 def Check(game, arr, n, m):
     for i in range(n):
         for j in range(m):
-            assert(game.Get(i, j) == arr[i][j])
+            if game.Get(i, j) != arr[i][j]:
+                print(game.map)
+                print(arr)
+                assert(game.Get(i, j) == arr[i][j])
+
 
 def Set(game, arr, n, m):
     for i in range(n):
         for j in range(m):
             game.Set(arr[i][j], i, j)
+
 
 def Test(start, finish, k):
     n = len(start)
@@ -29,6 +39,14 @@ def Test(start, finish, k):
     Set(game, start, n, m)
     game.Play(k)
     Check(game, finish, n, m)
+
+
+@test
+def TestSetGet():
+    game = CLife(3, 3)
+
+    game.Set('f', 1, 2)
+    assert (game.Get(1, 2) == 'f')
 
 @test
 def Test1():
@@ -41,6 +59,7 @@ def Test1():
     ['f', 'f']]
 
     Test(s, f, 2)
+
 
 @test
 def Test2():
@@ -55,6 +74,7 @@ def Test2():
     ['n', 's', 'n']]
     Test(s, f, 1)
 
+
 @test
 def Test3():
     s = [
@@ -68,6 +88,7 @@ def Test3():
     ['n', 's', 'n']]
 
     Test(s, f, 1)
+
 
 @test
 def TestNext():
@@ -86,9 +107,3 @@ def TestNext():
     game.Next()
     Check(game, f, 3, 3)
 
-@test
-def TestSetGet():
-    game = CLife(4, 4)
-    assert(game.Get(1, 1) == None)
-    game.Set('f', 1, 2)
-    assert (game.Get(1, 2) == 'f')
