@@ -1,55 +1,56 @@
-from life import CLife
+from life import Life
 
 
-class CTest:
+class Test:
     tests = []
 
-    def Run():
-        for i in range(len(CTest.tests)):
+    def run():
+        for i in range(len(Test.tests)):
             print("run test", i)
-            CTest.tests[i]()
+            Test.tests[i]()
             print("test", i, "done")
         print("all tests done")
 
 
 def test(f):
-    CTest.tests.append(f)
+    Test.tests.append(f)
     return f
 
 
-def Check(game, arr, n, m):
+def check(game, arr, n, m):
     for i in range(n):
         for j in range(m):
-            if game.Get(i, j) != arr[i][j]:
+            if game.get(i, j) != arr[i][j]:
                 print(game.map)
                 print(arr)
-                assert(game.Get(i, j) == arr[i][j])
+                assert(game.get(i, j) == arr[i][j])
 
 
-def Set(game, arr, n, m):
+def set(game, arr, n, m):
     for i in range(n):
         for j in range(m):
-            game.Set(arr[i][j], i, j)
+            game.set(arr[i][j], i, j)
 
 
-def Test(start, finish, k):
+def play_testing(start, finish, k):
     n = len(start)
     m = len(start[0])
-    game = CLife(n, m)
-    Set(game, start, n, m)
-    game.Play(k)
-    Check(game, finish, n, m)
+    game = Life(n, m)
+    set(game, start, n, m)
+    game.play(k)
+    check(game, finish, n, m)
 
 
 @test
-def TestSetGet():
-    game = CLife(3, 3)
+def test_set_get():
+    game = Life(3, 3)
 
-    game.Set('f', 1, 2)
-    assert (game.Get(1, 2) == 'f')
+    game.set('f', 1, 2)
+    assert (game.get(1, 2) == 'f')
+
 
 @test
-def Test1():
+def test_play_1():
     s = [
     ['f', 'f'],
     ['f', 's']]
@@ -58,11 +59,11 @@ def Test1():
     ['f', 'f'],
     ['f', 'f']]
 
-    Test(s, f, 2)
+    play_testing(s, f, 2)
 
 
 @test
-def Test2():
+def test_play_2():
     s = [
     ['f', 'f', 'f'],
     ['r', 'n', 'n'],
@@ -72,11 +73,11 @@ def Test2():
     ['n', 'f', 'n'],
     ['r', 'f', 'n'],
     ['n', 's', 'n']]
-    Test(s, f, 1)
+    play_testing(s, f, 1)
 
 
 @test
-def Test3():
+def test_play_3():
     s = [
     ['s', 's', 's'],
     ['r', 'r', 'r'],
@@ -87,11 +88,11 @@ def Test3():
     ['r', 'r', 'r'],
     ['n', 's', 'n']]
 
-    Test(s, f, 1)
+    play_testing(s, f, 1)
 
 
 @test
-def TestNext():
+def test_next():
     s = [
     ['s', 's', 's'],
     ['r', 'n', 'r'],
@@ -102,8 +103,8 @@ def TestNext():
     ['r', 'n', 'r'],
     ['n', 's', 'n']]
 
-    game = CLife(3, 3)
-    Set(game, s, 3, 3)
-    game.Next()
-    Check(game, f, 3, 3)
+    game = Life(3, 3)
+    set(game, s, 3, 3)
+    game.next()
+    check(game, f, 3, 3)
 

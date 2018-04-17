@@ -2,9 +2,9 @@ from collections import defaultdict
 import animals
 
 
-class CLife:
-    values = {animals.CFish(), animals.CNothing(),
-              animals.CShrimp(), animals.CRock()}
+class Life:
+    values = {animals.Fish(), animals.Nothing(),
+              animals.Shrimp(), animals.Rock()}
     val_by_keys = {u.key: u for u in values}
 
     def __init__(self, n, m):
@@ -12,26 +12,26 @@ class CLife:
         self.m = m
         self.map = [[None]*m for i in range(n)]
 
-    def Set(self, c, x, y):
-        assert(c in CLife.val_by_keys)
-        self.map[x][y] = CLife.val_by_keys[c]
+    def set(self, c, x, y):
+        assert(c in Life.val_by_keys)
+        self.map[x][y] = Life.val_by_keys[c]
 
-    def Get(self, x, y):
+    def get(self, x, y):
         return self.map[x][y].key
 
-    def Next(self):
+    def next(self):
         new_map = [[None]*self.m for i in range(self.n)]
 
         for i in range(self.n):
             for j in range(self.m):
-                new_map[i][j] = self.map[i][j].GetUpdated(self, i, j)
+                new_map[i][j] = self.map[i][j].get_updated(self, i, j)
         self.map = new_map
 
-    def Play(self, turns):
+    def play(self, turns):
         for i in range(turns):
-            self.Next()
+            self.next()
 
-    def GetNeighbors(self, x, y):
+    def get_neighbors(self, x, y):
         res = defaultdict(int)
 
         for xn in range(x-1, x+2):

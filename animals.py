@@ -1,43 +1,44 @@
-class CFish:
+class Fish:
     def __init__(self):
         self.key = 'f'
 
-    def GetUpdated(self, life, x, y):
-        neighbors = life.GetNeighbors(x, y)
-        if 2 <= neighbors[CFish().key] <= 3:
-            return CFish()
+    def get_updated(self, life, x, y):
+        neighbors = life.get_neighbors(x, y)
+        if 2 <= neighbors[Fish().key] <= 3:
+            return Fish()
         else:
-            return CNothing()
+            return Nothing()
 
-class CShrimp:
+
+class Shrimp:
     def __init__(self):
         self.key = 's'
 
-    def GetUpdated(self, life, x, y):
-        neighbors = life.GetNeighbors(x, y)
-        if 2 <= neighbors[CShrimp().key] <= 3:
-            return CShrimp()
+    def get_updated(self, life, x, y):
+        neighbors = life.get_neighbors(x, y)
+        if 2 <= neighbors[Shrimp().key] <= 3:
+            return Shrimp()
         else:
-            return CNothing()
+            return Nothing()
 
 
-class CRock:
+class Rock:
     def __init__(self):
         self.key = 'r'
 
-    def GetUpdated(self, life, x, y):
-        return CRock()
+    def get_updated(self, life, x, y):
+        return Rock()
 
 
-class CNothing:
+class Nothing:
     def __init__(self):
         self.key = 'n'
 
-    def GetUpdated(self, life, x, y):
-        neighbors = life.GetNeighbors(x, y)
-        if neighbors[CFish().key] == 3:
-            return CFish()
-        elif neighbors[CShrimp().key] == 3:
-            return CShrimp()
+    def get_updated(self, life, x, y):
+        neighbors = life.get_neighbors(x, y)
+        if neighbors[Fish().key] == 3:
+            return Fish()
+        elif neighbors[Shrimp().key] == 3:
+            return Shrimp()
         else:
-            return CNothing()
+            return Nothing()
