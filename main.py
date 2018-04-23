@@ -13,7 +13,7 @@ def get_parser_args():
     return parser.parse_args()
 
 
-def Run():
+def run():
     args = get_parser_args()
 
     if args.runtests:
@@ -22,10 +22,7 @@ def Run():
         if args.inputfile is not None:
             sys.stdin = open(args.inputfile, "r")
 
-        height, width, iterations = input().split()
-        height = int(height)
-        width = int(width)
-        iterations = int(iterations)
+        height, width, iterations = map(int, input().split())
         life = Life(height, width)
         for i in range(height):
             l = list(input())
@@ -44,4 +41,4 @@ def Run():
 
 
 if __name__ == "__main__":
-    Run()
+    run()
