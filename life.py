@@ -3,8 +3,9 @@ import animals
 
 
 class Life:
-    animals = {animals.Fish(), animals.Nothing(), animals.Shrimp(), animals.Rock()}
-    animal_by_key = {u.key: u for u in animals}
+    animals = {animals.Fish(), animals.Nothing(),
+               animals.Shrimp(), animals.Rock()}
+    animal_by_id = {u.id: u for u in animals}
 
     def __init__(self, n, m):
         self.n = n
@@ -12,11 +13,11 @@ class Life:
         self.map = [[None]*m for i in range(n)]
 
     def set(self, c, x, y):
-        assert(c in Life.animal_by_key)
-        self.map[x][y] = Life.animal_by_key[c]
+        assert(c in Life.animal_by_id)
+        self.map[x][y] = Life.animal_by_id[c]
 
     def get(self, x, y):
-        return self.map[x][y].key
+        return self.map[x][y].id
 
     def next(self):
         new_map = [[None]*self.m for i in range(self.n)]
@@ -35,8 +36,8 @@ class Life:
 
         for xn in range(x-1, x+2):
             for yn in range(y-1, y+2):
-                if 0 <= xn < self.n and 0 <= yn < self.m and (xn, yn) != (x, y):
-                    res[self.map[xn][yn].key] += 1
+                if 0 <= xn < self.n and 0 <= yn < self.m and \
+                        (xn, yn) != (x, y):
+                    res[self.map[xn][yn].id] += 1
 
         return res
-

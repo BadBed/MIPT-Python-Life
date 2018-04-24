@@ -25,10 +25,10 @@ def run():
         height, width, iterations = map(int, input().split())
         life = Life(height, width)
         for i in range(height):
-            l = list(input())
+            line = list(input())
             for j in range(width):
-                life.set(l[j], i, j)
-            
+                life.set(line[j], i, j)
+
         life.play(iterations)
 
         if args.outputfile is not None:
