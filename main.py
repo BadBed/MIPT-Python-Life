@@ -14,13 +14,13 @@ def get_parser_args():
 
 
 def run():
-    args = get_parser_args()
+    parser_args = get_parser_args()
 
-    if args.runtests:
+    if parser_args.runtests:
         Test.run()
     else:
-        if args.inputfile is not None:
-            sys.stdin = open(args.inputfile, "r")
+        if parser_args.inputfile is not None:
+            sys.stdin = open(parser_args.inputfile, "r")
 
         height, width, iterations = map(int, input().split())
         life = Life(height, width)
@@ -31,8 +31,8 @@ def run():
 
         life.play(iterations)
 
-        if args.outputfile is not None:
-            sys.stdout = open(args.outputfile, "w")
+        if parser_args.outputfile is not None:
+            sys.stdout = open(parser_args.outputfile, "w")
 
         for i in range(height):
             for j in range(width):

@@ -1,43 +1,43 @@
 from collections import defaultdict
-import animals
+import animals as module_animals
 
 
 class Life:
-    animals = {animals.Fish(), animals.Nothing(),
-               animals.Shrimp(), animals.Rock()}
-    animal_by_id = {u.id: u for u in animals}
+    animals = {a() for a in module_animals.Animal.__subclasses__()}
+    animal_by_id = {a.id: a for a in animals}
 
-    def __init__(self, n, m):
-        self.n = n
-        self.m = m
-        self.map = [[None]*m for i in range(n)]
+    def __init__(self, height, width):
+        self.height = height
+        self.width = width
+        self.map = [[None]*width for i in range(height)]
 
-    def set(self, c, x, y):
-        assert(c in Life.animal_by_id)
-        self.map[x][y] = Life.animal_by_id[c]
+    def set(self, id, x, y):
+        assert(id in Life.animal_by_id)
+        self.map[x][y] = Life.animal_by_id[id]
 
     def get(self, x, y):
         return self.map[x][y].id
 
-    def next(self):
-        new_map = [[None]*self.m for i in range(self.n)]
+    def next_generation(self):
+        new_map = [[None]*self.width for i in range(self.height)]
 
-        for i in range(self.n):
-            for j in range(self.m):
+        for i in range(self.height):
+            for j in range(self.width):
                 new_map[i][j] = self.map[i][j].get_updated(self, i, j)
         self.map = new_map
 
     def play(self, turns):
         for i in range(turns):
-            self.next()
+            self.next_generation()
 
     def get_neighbors(self, x, y):
-        res = defaultdict(int)
+        result = defaultdict(int)
 
-        for xn in range(x-1, x+2):
-            for yn in range(y-1, y+2):
-                if 0 <= xn < self.n and 0 <= yn < self.m and \
-                        (xn, yn) != (x, y):
-                    res[self.map[xn][yn].id] += 1
+        for neighbor_x in range(x-1, x+2):
+            for neighbor_y in range(y-1, y+2):
+                if 0 <= neighbor_x < self.height and \
+                        0 <= neighbor_y < self.width and\
+                        (neighbor_x, neighbor_y) != (x, y):
+                    result[self.map[neighbor_x][neighbor_y].id] += 1
 
-        return res
+        return result

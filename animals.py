@@ -1,6 +1,11 @@
-class Fish:
-    def __init__(self):
-        self.id = 'f'
+class Animal:
+    @staticmethod
+    def get_updated(life, x, y):
+        assert(False)
+
+
+class Fish(Animal):
+    id = 'f'
 
     @staticmethod
     def get_updated(life, x, y):
@@ -11,9 +16,8 @@ class Fish:
             return Nothing()
 
 
-class Shrimp:
-    def __init__(self):
-        self.id = 's'
+class Shrimp(Animal):
+    id = 's'
 
     @staticmethod
     def get_updated(life, x, y):
@@ -24,18 +28,16 @@ class Shrimp:
             return Nothing()
 
 
-class Rock:
-    def __init__(self):
-        self.id = 'r'
+class Rock(Animal):
+    id = 'r'
 
     @staticmethod
     def get_updated(life, x, y):
         return Rock()
 
 
-class Nothing:
-    def __init__(self):
-        self.id = 'n'
+class Nothing(Animal):
+    id = 'n'
 
     @staticmethod
     def get_updated(life, x, y):
